@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Parse NormalizeToMatrix | ggChIPvis Reference Book</title>
+  <meta name="description" content="This is a detailed documentation of ggChIPvis package." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Parse NormalizeToMatrix | ggChIPvis Reference Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a detailed documentation of ggChIPvis package." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Parse NormalizeToMatrix | ggChIPvis Reference Book" />
+  
+  <meta name="twitter:description" content="This is a detailed documentation of ggChIPvis package." />
+  
+
+<meta name="author" content="Jun Zhang" />
+
+
+<meta name="date" content="2023-10-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="parse-gettagmatrix.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ggChIPvis manual documentation</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i><b>1.1</b> Citation</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#example"><i class="fa fa-check"></i><b>1.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html"><i class="fa fa-check"></i><b>2</b> Parse NormalizeToMatrix</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#test-data"><i class="fa fa-check"></i><b>2.1</b> Test data</a></li>
+<li class="chapter" data-level="2.2" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#prepare-interest-genomic-regions"><i class="fa fa-check"></i><b>2.2</b> Prepare interest genomic regions</a></li>
+<li class="chapter" data-level="2.3" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#compute-nomalized-matrix"><i class="fa fa-check"></i><b>2.3</b> Compute nomalized matrix</a></li>
+<li class="chapter" data-level="2.4" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#extract-data"><i class="fa fa-check"></i><b>2.4</b> Extract data</a></li>
+<li class="chapter" data-level="2.5" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#enrichedheatmap-visualization"><i class="fa fa-check"></i><b>2.5</b> EnrichedHeatmap visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#chipvis-visualization"><i class="fa fa-check"></i><b>2.6</b> ChipVis visualization</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#profile-plot"><i class="fa fa-check"></i><b>2.6.1</b> Profile plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#heatmap-plot"><i class="fa fa-check"></i><b>2.6.2</b> Heatmap plot</a></li>
+<li class="chapter" data-level="2.6.3" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#combined-plot"><i class="fa fa-check"></i><b>2.6.3</b> Combined plot</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#cluster-for-genes"><i class="fa fa-check"></i><b>2.7</b> Cluster for genes</a></li>
+<li class="chapter" data-level="2.8" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#plot-around-tss-site"><i class="fa fa-check"></i><b>2.8</b> Plot around TSS site</a></li>
+<li class="chapter" data-level="2.9" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#samples-with-different-target-regions"><i class="fa fa-check"></i><b>2.9</b> Samples with different target regions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html"><i class="fa fa-check"></i><b>3</b> Parse getTagMatrix</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#do-enrichment-analysis"><i class="fa fa-check"></i><b>3.1</b> Do enrichment analysis</a></li>
+<li class="chapter" data-level="3.2" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#profile-plot-1"><i class="fa fa-check"></i><b>3.2</b> Profile plot</a></li>
+<li class="chapter" data-level="3.3" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#heatmap-plot-1"><i class="fa fa-check"></i><b>3.3</b> Heatmap plot</a></li>
+<li class="chapter" data-level="3.4" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#combined-plot-1"><i class="fa fa-check"></i><b>3.4</b> Combined plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="parse-computematrix.html"><a href="parse-computematrix.html"><i class="fa fa-check"></i><b>4</b> Parse computeMatrix</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#test-data-1"><i class="fa fa-check"></i><b>4.1</b> Test data</a></li>
+<li class="chapter" data-level="4.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#prepare-target-genes"><i class="fa fa-check"></i><b>4.2</b> Prepare target genes</a></li>
+<li class="chapter" data-level="4.3" data-path="parse-computematrix.html"><a href="parse-computematrix.html#using-computematrix-and-plot-data"><i class="fa fa-check"></i><b>4.3</b> Using computeMatrix and plot data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#reference-point-mode"><i class="fa fa-check"></i><b>4.3.1</b> reference-point mode</a></li>
+<li class="chapter" data-level="4.3.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#scale-regions-mode"><i class="fa fa-check"></i><b>4.3.2</b> scale-regions mode</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="parse-computematrix.html"><a href="parse-computematrix.html#parse-deeptools-output-with-reference-point-mode"><i class="fa fa-check"></i><b>4.4</b> Parse deeptools output with reference-point mode</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#extract-data-1"><i class="fa fa-check"></i><b>4.4.1</b> Extract data</a></li>
+<li class="chapter" data-level="4.4.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#profile-plot-2"><i class="fa fa-check"></i><b>4.4.2</b> Profile plot</a></li>
+<li class="chapter" data-level="4.4.3" data-path="parse-computematrix.html"><a href="parse-computematrix.html#heatmap-plot-2"><i class="fa fa-check"></i><b>4.4.3</b> Heatmap plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="parse-computematrix.html"><a href="parse-computematrix.html#parse-deeptools-output-with-scale-regions-mode"><i class="fa fa-check"></i><b>4.5</b> Parse deeptools output with scale-regions mode</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#extract-data-2"><i class="fa fa-check"></i><b>4.5.1</b> Extract data</a></li>
+<li class="chapter" data-level="4.5.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#profile-plot-3"><i class="fa fa-check"></i><b>4.5.2</b> Profile plot</a></li>
+<li class="chapter" data-level="4.5.3" data-path="parse-computematrix.html"><a href="parse-computematrix.html#heatmap-plot-3"><i class="fa fa-check"></i><b>4.5.3</b> Heatmap plot</a></li>
+<li class="chapter" data-level="4.5.4" data-path="parse-computematrix.html"><a href="parse-computematrix.html#combined-plot-2"><i class="fa fa-check"></i><b>4.5.4</b> Combined plot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="adding-rowsplit-groups.html"><a href="adding-rowsplit-groups.html"><i class="fa fa-check"></i><b>5</b> Adding rowsplit groups</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="adding-rowsplit-groups.html"><a href="adding-rowsplit-groups.html#prepare-data"><i class="fa fa-check"></i><b>5.1</b> Prepare data</a></li>
+<li class="chapter" data-level="5.2" data-path="adding-rowsplit-groups.html"><a href="adding-rowsplit-groups.html#visualization-data"><i class="fa fa-check"></i><b>5.2</b> Visualization data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="statistics-of-enriched-signals.html"><a href="statistics-of-enriched-signals.html"><i class="fa fa-check"></i><b>6</b> Statistics of enriched signals</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="statistics-of-enriched-signals.html"><a href="statistics-of-enriched-signals.html#check-extracted-data"><i class="fa fa-check"></i><b>6.1</b> Check extracted data</a></li>
+<li class="chapter" data-level="6.2" data-path="statistics-of-enriched-signals.html"><a href="statistics-of-enriched-signals.html#drawing-boxplot"><i class="fa fa-check"></i><b>6.2</b> Drawing boxplot</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ggChIPvis Reference Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="parse-normalizetomatrix" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Parse NormalizeToMatrix<a href="parse-normalizetomatrix.html#parse-normalizetomatrix" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Function <strong>retriveData</strong> can extract data from <strong>EnrichedHeatmap::normalizeToMatrix</strong>
+function output. Then we can visualize the data extracted data from <strong>retriveData</strong>.
+<strong>retriveData</strong> returns a list which includes two long-format data.frame <strong>profile</strong>
+and <strong>heatmap</strong>. This charpter we will describe how to achive this.</p>
+<div id="test-data" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Test data<a href="parse-normalizetomatrix.html#test-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The bigwig data can be fetched from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi">GSE212977</a>.</p>
+<hr />
+<p>Load packages we need:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="parse-normalizetomatrix.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(ggChIPvis)</span>
+<span id="cb2-2"><a href="parse-normalizetomatrix.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-3"><a href="parse-normalizetomatrix.html#cb2-3" tabindex="-1"></a><span class="fu">library</span>(rtracklayer)</span>
+<span id="cb2-4"><a href="parse-normalizetomatrix.html#cb2-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-5"><a href="parse-normalizetomatrix.html#cb2-5" tabindex="-1"></a><span class="fu">library</span>(ggh4x)</span>
+<span id="cb2-6"><a href="parse-normalizetomatrix.html#cb2-6" tabindex="-1"></a><span class="fu">library</span>(EnrichedHeatmap)</span></code></pre></div>
+</div>
+<div id="prepare-interest-genomic-regions" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Prepare interest genomic regions<a href="parse-normalizetomatrix.html#prepare-interest-genomic-regions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here we prepare human GRCh37 version of genes, we select 2000 genes for test:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="parse-normalizetomatrix.html#cb3-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;./&quot;</span>)</span>
+<span id="cb3-2"><a href="parse-normalizetomatrix.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="parse-normalizetomatrix.html#cb3-3" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">import.gff</span>(<span class="st">&quot;Homo_sapiens.GRCh37.87.gtf.gz&quot;</span>,<span class="at">format =</span> <span class="st">&quot;gtf&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="parse-normalizetomatrix.html#cb3-4" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;gene&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="parse-normalizetomatrix.html#cb3-5" tabindex="-1"></a>  <span class="fu">select</span>(seqnames,start,end,strand) <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="parse-normalizetomatrix.html#cb3-6" tabindex="-1"></a>  <span class="fu">GRanges</span>()</span>
+<span id="cb3-7"><a href="parse-normalizetomatrix.html#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="parse-normalizetomatrix.html#cb3-8" tabindex="-1"></a>gtf</span>
+<span id="cb3-9"><a href="parse-normalizetomatrix.html#cb3-9" tabindex="-1"></a><span class="co"># GRanges object with 57905 ranges and 0 metadata columns:</span></span>
+<span id="cb3-10"><a href="parse-normalizetomatrix.html#cb3-10" tabindex="-1"></a><span class="co">#         seqnames      ranges strand</span></span>
+<span id="cb3-11"><a href="parse-normalizetomatrix.html#cb3-11" tabindex="-1"></a><span class="co">#            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span id="cb3-12"><a href="parse-normalizetomatrix.html#cb3-12" tabindex="-1"></a><span class="co">#   [1]         1 11869-14412      +</span></span>
+<span id="cb3-13"><a href="parse-normalizetomatrix.html#cb3-13" tabindex="-1"></a><span class="co">#   [2]         1 14363-29806      -</span></span>
+<span id="cb3-14"><a href="parse-normalizetomatrix.html#cb3-14" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb3-15"><a href="parse-normalizetomatrix.html#cb3-15" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="parse-normalizetomatrix.html#cb3-16" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">head</span>(gtf,<span class="dv">2000</span>)</span></code></pre></div>
+</div>
+<div id="compute-nomalized-matrix" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Compute nomalized matrix<a href="parse-normalizetomatrix.html#compute-nomalized-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now we use <strong>normalizeToMatrix</strong> compute normalized signals for bigiwig files around target regions:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="parse-normalizetomatrix.html#cb4-1" tabindex="-1"></a>bwfile <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;GSE212977_RAW/&quot;</span>,<span class="at">pattern =</span> <span class="st">&quot;.bw&quot;</span>,<span class="at">full.names =</span> T)</span>
+<span id="cb4-2"><a href="parse-normalizetomatrix.html#cb4-2" tabindex="-1"></a>bwfile</span>
+<span id="cb4-3"><a href="parse-normalizetomatrix.html#cb4-3" tabindex="-1"></a><span class="co"># [1] &quot;GSE212977_RAW/GSM6567977_DSRCT1.H3K27ac.bw&quot; </span></span>
+<span id="cb4-4"><a href="parse-normalizetomatrix.html#cb4-4" tabindex="-1"></a><span class="co"># [2] &quot;GSE212977_RAW/GSM6567978_DSRCT1.H3K27me3.bw&quot;</span></span>
+<span id="cb4-5"><a href="parse-normalizetomatrix.html#cb4-5" tabindex="-1"></a><span class="co"># [3] &quot;GSE212977_RAW/GSM6567979_DSRCT1.H3K4m1.bw&quot;  </span></span>
+<span id="cb4-6"><a href="parse-normalizetomatrix.html#cb4-6" tabindex="-1"></a><span class="co"># [4] &quot;GSE212977_RAW/GSM6567980_DSRCT1.H3K4m3.bw&quot;  </span></span>
+<span id="cb4-7"><a href="parse-normalizetomatrix.html#cb4-7" tabindex="-1"></a><span class="co"># [5] &quot;GSE212977_RAW/GSM6567981_DSRCT1.H3K9ac.bw&quot;  </span></span>
+<span id="cb4-8"><a href="parse-normalizetomatrix.html#cb4-8" tabindex="-1"></a><span class="co"># [6] &quot;GSE212977_RAW/GSM6567982_DSRCT1.INPUT.bw&quot;  </span></span>
+<span id="cb4-9"><a href="parse-normalizetomatrix.html#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="parse-normalizetomatrix.html#cb4-10" tabindex="-1"></a><span class="co"># x = 1</span></span>
+<span id="cb4-11"><a href="parse-normalizetomatrix.html#cb4-11" tabindex="-1"></a><span class="co"># compute matrix</span></span>
+<span id="cb4-12"><a href="parse-normalizetomatrix.html#cb4-12" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">seq_along</span>(bwfile), <span class="cf">function</span>(x){</span>
+<span id="cb4-13"><a href="parse-normalizetomatrix.html#cb4-13" tabindex="-1"></a>  <span class="co"># func test</span></span>
+<span id="cb4-14"><a href="parse-normalizetomatrix.html#cb4-14" tabindex="-1"></a>  bw <span class="ot">&lt;-</span> <span class="fu">import.bw</span>(bwfile[x])</span>
+<span id="cb4-15"><a href="parse-normalizetomatrix.html#cb4-15" tabindex="-1"></a>  </span>
+<span id="cb4-16"><a href="parse-normalizetomatrix.html#cb4-16" tabindex="-1"></a>  mat_trim <span class="ot">=</span> <span class="fu">normalizeToMatrix</span>(bw, genes, <span class="at">value_column =</span> <span class="st">&quot;score&quot;</span>, </span>
+<span id="cb4-17"><a href="parse-normalizetomatrix.html#cb4-17" tabindex="-1"></a>                               <span class="at">extend =</span> <span class="dv">3000</span>, <span class="at">mean_mode =</span> <span class="st">&quot;w0&quot;</span>, <span class="at">w =</span> <span class="dv">50</span>, </span>
+<span id="cb4-18"><a href="parse-normalizetomatrix.html#cb4-18" tabindex="-1"></a>                               <span class="at">keep =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.99</span>),</span>
+<span id="cb4-19"><a href="parse-normalizetomatrix.html#cb4-19" tabindex="-1"></a>                               <span class="at">background =</span> <span class="dv">0</span>, </span>
+<span id="cb4-20"><a href="parse-normalizetomatrix.html#cb4-20" tabindex="-1"></a>                               <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-21"><a href="parse-normalizetomatrix.html#cb4-21" tabindex="-1"></a>}) <span class="ot">-&gt;</span> mat_list</span></code></pre></div>
+</div>
+<div id="extract-data" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Extract data<a href="parse-normalizetomatrix.html#extract-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can see the extracted data which include two long-format data.frame with some
+other attributes:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="parse-normalizetomatrix.html#cb5-1" tabindex="-1"></a>sample.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;H3K27ac&#39;</span>,<span class="st">&#39;H3K27me3&#39;</span>,<span class="st">&#39;H3K4m1&#39;</span>,<span class="st">&#39;H3K4m3&#39;</span>,<span class="st">&#39;H3K9ac&#39;</span>,<span class="st">&#39;INPUT&#39;</span>)</span>
+<span id="cb5-2"><a href="parse-normalizetomatrix.html#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="parse-normalizetomatrix.html#cb5-3" tabindex="-1"></a><span class="co"># get matrix data</span></span>
+<span id="cb5-4"><a href="parse-normalizetomatrix.html#cb5-4" tabindex="-1"></a>mat_df <span class="ot">&lt;-</span> <span class="fu">retriveData</span>(<span class="at">mat.list =</span> mat_list,<span class="at">sample.names =</span> sample.names)</span>
+<span id="cb5-5"><a href="parse-normalizetomatrix.html#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="parse-normalizetomatrix.html#cb5-6" tabindex="-1"></a><span class="co"># check</span></span>
+<span id="cb5-7"><a href="parse-normalizetomatrix.html#cb5-7" tabindex="-1"></a><span class="fu">str</span>(mat_df)</span>
+<span id="cb5-8"><a href="parse-normalizetomatrix.html#cb5-8" tabindex="-1"></a><span class="co"># List of 2</span></span>
+<span id="cb5-9"><a href="parse-normalizetomatrix.html#cb5-9" tabindex="-1"></a><span class="co"># $ profile:&#39;data.frame&#39;:   1200 obs. of  6 variables:</span></span>
+<span id="cb5-10"><a href="parse-normalizetomatrix.html#cb5-10" tabindex="-1"></a><span class="co">#   ..$ density : num [1:1200] 0.851 0.829 0.824 0.83 0.836 ...</span></span>
+<span id="cb5-11"><a href="parse-normalizetomatrix.html#cb5-11" tabindex="-1"></a><span class="co"># ..$ x       : int [1:1200] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb5-12"><a href="parse-normalizetomatrix.html#cb5-12" tabindex="-1"></a><span class="co"># ..$ sample  : chr [1:1200] &quot;H3K27ac&quot; &quot;H3K27ac&quot; &quot;H3K27ac&quot; &quot;H3K27ac&quot; ...</span></span>
+<span id="cb5-13"><a href="parse-normalizetomatrix.html#cb5-13" tabindex="-1"></a><span class="co"># ..$ split   : chr [1:1200] &quot;Binding sites: 2000&quot; &quot;Binding sites: 2000&quot; &quot;Binding sites: 2000&quot; &quot;Binding sites: 2000&quot; ...</span></span>
+<span id="cb5-14"><a href="parse-normalizetomatrix.html#cb5-14" tabindex="-1"></a><span class="co"># ..$ lower_ci: num [1:1200] 0.763 0.743 0.74 0.747 0.753 ...</span></span>
+<span id="cb5-15"><a href="parse-normalizetomatrix.html#cb5-15" tabindex="-1"></a><span class="co"># ..$ upper_ci: num [1:1200] 0.939 0.915 0.907 0.912 0.919 ...</span></span>
+<span id="cb5-16"><a href="parse-normalizetomatrix.html#cb5-16" tabindex="-1"></a><span class="co"># $ heatmap:&#39;data.frame&#39;:   2400000 obs. of  5 variables:</span></span>
+<span id="cb5-17"><a href="parse-normalizetomatrix.html#cb5-17" tabindex="-1"></a><span class="co">#   ..$ y     : Factor w/ 2000 levels &quot;Binding sites: 2000_455&quot;,..: 1316 1321 1650 1861 943 673 1261 1032 1429 389 ...</span></span>
+<span id="cb5-18"><a href="parse-normalizetomatrix.html#cb5-18" tabindex="-1"></a><span class="co"># ..$ x     : num [1:2400000] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb5-19"><a href="parse-normalizetomatrix.html#cb5-19" tabindex="-1"></a><span class="co"># ..$ value : num [1:2400000] 0 1.411 1.526 0.442 0 ...</span></span>
+<span id="cb5-20"><a href="parse-normalizetomatrix.html#cb5-20" tabindex="-1"></a><span class="co"># ..$ split : chr [1:2400000] &quot;Binding sites: 2000\n(n=2000)&quot; &quot;Binding sites: 2000\n(n=2000)&quot; &quot;Binding sites: 2000\n(n=2000)&quot; &quot;Binding sites: 2000\n(n=2000)&quot; ...</span></span>
+<span id="cb5-21"><a href="parse-normalizetomatrix.html#cb5-21" tabindex="-1"></a><span class="co"># ..$ sample: chr [1:2400000] &quot;H3K27ac&quot; &quot;H3K27ac&quot; &quot;H3K27ac&quot; &quot;H3K27ac&quot; ...</span></span>
+<span id="cb5-22"><a href="parse-normalizetomatrix.html#cb5-22" tabindex="-1"></a><span class="co"># - attr(*, &quot;class&quot;)= chr &quot;chipData&quot;</span></span>
+<span id="cb5-23"><a href="parse-normalizetomatrix.html#cb5-23" tabindex="-1"></a><span class="co"># - attr(*, &quot;axis_name&quot;)= chr [1:4] &quot;-3000&quot; &quot;start&quot; &quot;end&quot; &quot;3000&quot;</span></span>
+<span id="cb5-24"><a href="parse-normalizetomatrix.html#cb5-24" tabindex="-1"></a><span class="co"># - attr(*, &quot;axis_breaks&quot;)= num [1:4] 1 61 141 200</span></span>
+<span id="cb5-25"><a href="parse-normalizetomatrix.html#cb5-25" tabindex="-1"></a><span class="co"># - attr(*, &quot;vline_x&quot;)= num [1:2] 61 141</span></span>
+<span id="cb5-26"><a href="parse-normalizetomatrix.html#cb5-26" tabindex="-1"></a><span class="co"># - attr(*, &quot;axis_textx_hjust&quot;)= num [1:4] 0 0.5 0.5 1</span></span></code></pre></div>
+</div>
+<div id="enrichedheatmap-visualization" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> EnrichedHeatmap visualization<a href="parse-normalizetomatrix.html#enrichedheatmap-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First we show what the <strong>EnrichedHeatmap</strong> output looks like:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="parse-normalizetomatrix.html#cb6-1" tabindex="-1"></a>bg_col <span class="ot">&lt;-</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>, <span class="st">&quot;Set2&quot;</span>)</span>
+<span id="cb6-2"><a href="parse-normalizetomatrix.html#cb6-2" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">seq_along</span>(bwfile), <span class="cf">function</span>(x){</span>
+<span id="cb6-3"><a href="parse-normalizetomatrix.html#cb6-3" tabindex="-1"></a>  <span class="co"># func test</span></span>
+<span id="cb6-4"><a href="parse-normalizetomatrix.html#cb6-4" tabindex="-1"></a>  bw <span class="ot">&lt;-</span> <span class="fu">import.bw</span>(bwfile[x])</span>
+<span id="cb6-5"><a href="parse-normalizetomatrix.html#cb6-5" tabindex="-1"></a>  </span>
+<span id="cb6-6"><a href="parse-normalizetomatrix.html#cb6-6" tabindex="-1"></a>  mat_trim <span class="ot">=</span> <span class="fu">normalizeToMatrix</span>(bw, genes, <span class="at">value_column =</span> <span class="st">&quot;score&quot;</span>, </span>
+<span id="cb6-7"><a href="parse-normalizetomatrix.html#cb6-7" tabindex="-1"></a>                               <span class="at">extend =</span> <span class="dv">3000</span>, <span class="at">mean_mode =</span> <span class="st">&quot;w0&quot;</span>, <span class="at">w =</span> <span class="dv">50</span>, </span>
+<span id="cb6-8"><a href="parse-normalizetomatrix.html#cb6-8" tabindex="-1"></a>                               <span class="at">keep =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.99</span>),</span>
+<span id="cb6-9"><a href="parse-normalizetomatrix.html#cb6-9" tabindex="-1"></a>                               <span class="at">background =</span> <span class="dv">0</span>, </span>
+<span id="cb6-10"><a href="parse-normalizetomatrix.html#cb6-10" tabindex="-1"></a>                               <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-11"><a href="parse-normalizetomatrix.html#cb6-11" tabindex="-1"></a>  </span>
+<span id="cb6-12"><a href="parse-normalizetomatrix.html#cb6-12" tabindex="-1"></a>  <span class="fu">EnrichedHeatmap</span>(mat_trim, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,bg_col[x]), <span class="at">name =</span> sample.names[x],</span>
+<span id="cb6-13"><a href="parse-normalizetomatrix.html#cb6-13" tabindex="-1"></a>                  <span class="at">column_title =</span> sample.names[x],</span>
+<span id="cb6-14"><a href="parse-normalizetomatrix.html#cb6-14" tabindex="-1"></a>                  <span class="at">column_title_gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">10</span>, </span>
+<span id="cb6-15"><a href="parse-normalizetomatrix.html#cb6-15" tabindex="-1"></a>                                         <span class="at">fill =</span> bg_col[x]),</span>
+<span id="cb6-16"><a href="parse-normalizetomatrix.html#cb6-16" tabindex="-1"></a>                  <span class="co"># top_annotation = HeatmapAnnotation(</span></span>
+<span id="cb6-17"><a href="parse-normalizetomatrix.html#cb6-17" tabindex="-1"></a>                  <span class="co">#   enriched = anno_enriched(</span></span>
+<span id="cb6-18"><a href="parse-normalizetomatrix.html#cb6-18" tabindex="-1"></a>                  <span class="co">#     ylim = c(0, 30))),</span></span>
+<span id="cb6-19"><a href="parse-normalizetomatrix.html#cb6-19" tabindex="-1"></a>                  <span class="at">use_raster =</span> F,</span>
+<span id="cb6-20"><a href="parse-normalizetomatrix.html#cb6-20" tabindex="-1"></a>                  <span class="co"># show_heatmap_legend = lgd[x],</span></span>
+<span id="cb6-21"><a href="parse-normalizetomatrix.html#cb6-21" tabindex="-1"></a>                  <span class="at">show_heatmap_legend =</span> T</span>
+<span id="cb6-22"><a href="parse-normalizetomatrix.html#cb6-22" tabindex="-1"></a>  )</span>
+<span id="cb6-23"><a href="parse-normalizetomatrix.html#cb6-23" tabindex="-1"></a>}) <span class="ot">-&gt;</span> ht_list</span>
+<span id="cb6-24"><a href="parse-normalizetomatrix.html#cb6-24" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="parse-normalizetomatrix.html#cb6-25" tabindex="-1"></a><span class="co"># merge plot list</span></span>
+<span id="cb6-26"><a href="parse-normalizetomatrix.html#cb6-26" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;ht_6samples.pdf&quot;</span>,<span class="at">width =</span> <span class="dv">12</span>,<span class="at">height =</span> <span class="dv">8</span>,<span class="at">onefile =</span> F)</span>
+<span id="cb6-27"><a href="parse-normalizetomatrix.html#cb6-27" tabindex="-1"></a><span class="fu">draw</span>(<span class="fu">Reduce</span>(<span class="st">&quot;+&quot;</span>,ht_list), <span class="at">ht_gap =</span> <span class="fu">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb6-28"><a href="parse-normalizetomatrix.html#cb6-28" tabindex="-1"></a>     <span class="at">heatmap_legend_side =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb6-29"><a href="parse-normalizetomatrix.html#cb6-29" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<p><img src="local_images/1.png" style="width:100.0%" /></p>
+</div>
+<div id="chipvis-visualization" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> ChipVis visualization<a href="parse-normalizetomatrix.html#chipvis-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Function <strong>ChipVis</strong> accept output object from <strong>retriveData</strong>. Just a little code
+needed to plot the data. You can plot the <strong>profile</strong> plot , <strong>heatmap</strong> plot or both
+with <strong>plot.type</strong> parameter.</p>
+<hr />
+<div id="profile-plot" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Profile plot<a href="parse-normalizetomatrix.html#profile-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we do some examples for profile plot. Default output:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="parse-normalizetomatrix.html#cb7-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb7-2"><a href="parse-normalizetomatrix.html#cb7-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/2.png" style="width:100.0%" /></p>
+<p>Control the line layers;</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="parse-normalizetomatrix.html#cb8-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb8-2"><a href="parse-normalizetomatrix.html#cb8-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb8-3"><a href="parse-normalizetomatrix.html#cb8-3" tabindex="-1"></a>        <span class="at">geom_line_params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;#C23373&quot;</span>,<span class="at">linewidth =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="local_images/3.png" style="width:100.0%" /></p>
+<p>Change the sample orders:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="parse-normalizetomatrix.html#cb9-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb9-2"><a href="parse-normalizetomatrix.html#cb9-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb9-3"><a href="parse-normalizetomatrix.html#cb9-3" tabindex="-1"></a>        <span class="at">geom_line_params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;#C23373&quot;</span>,<span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb9-4"><a href="parse-normalizetomatrix.html#cb9-4" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names))</span></code></pre></div>
+<p><img src="local_images/4.png" style="width:100.0%" />
+Don’t draw rect and control the facet parameters:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="parse-normalizetomatrix.html#cb10-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb10-2"><a href="parse-normalizetomatrix.html#cb10-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb10-3"><a href="parse-normalizetomatrix.html#cb10-3" tabindex="-1"></a>        <span class="at">geom_line_params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;#C23373&quot;</span>,<span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb10-4"><a href="parse-normalizetomatrix.html#cb10-4" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb10-5"><a href="parse-normalizetomatrix.html#cb10-5" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> <span class="fu">list</span>(<span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>,<span class="at">independent =</span> <span class="st">&quot;y&quot;</span>),</span>
+<span id="cb10-6"><a href="parse-normalizetomatrix.html#cb10-6" tabindex="-1"></a>        <span class="at">draw_rect =</span> F)</span></code></pre></div>
+<p><img src="local_images/5.png" style="width:100.0%" />
+Change the facet background colors:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="parse-normalizetomatrix.html#cb11-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb11-2"><a href="parse-normalizetomatrix.html#cb11-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb11-3"><a href="parse-normalizetomatrix.html#cb11-3" tabindex="-1"></a>        <span class="at">geom_line_params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;#C23373&quot;</span>,<span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb11-4"><a href="parse-normalizetomatrix.html#cb11-4" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb11-5"><a href="parse-normalizetomatrix.html#cb11-5" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> </span>
+<span id="cb11-6"><a href="parse-normalizetomatrix.html#cb11-6" tabindex="-1"></a>          <span class="fu">list</span>(<span class="at">strip =</span> <span class="fu">strip_themed</span>(<span class="at">background_x =</span> </span>
+<span id="cb11-7"><a href="parse-normalizetomatrix.html#cb11-7" tabindex="-1"></a>                                      <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>),</span>
+<span id="cb11-8"><a href="parse-normalizetomatrix.html#cb11-8" tabindex="-1"></a>                                                     <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>))</span>
+<span id="cb11-9"><a href="parse-normalizetomatrix.html#cb11-9" tabindex="-1"></a>          )))</span></code></pre></div>
+<p><img src="local_images/6.png" style="width:100.0%" /></p>
+<p>Control the vertical line layer:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="parse-normalizetomatrix.html#cb12-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb12-2"><a href="parse-normalizetomatrix.html#cb12-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb12-3"><a href="parse-normalizetomatrix.html#cb12-3" tabindex="-1"></a>        <span class="at">vline_params =</span> <span class="fu">list</span>(<span class="at">linewidth =</span> <span class="dv">1</span>,<span class="at">color =</span> <span class="st">&quot;pink&quot;</span>))</span></code></pre></div>
+<p><img src="local_images/7.png" style="width:100.0%" /></p>
+<hr />
+</div>
+<div id="heatmap-plot" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Heatmap plot<a href="parse-normalizetomatrix.html#heatmap-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Default output:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="parse-normalizetomatrix.html#cb13-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb13-2"><a href="parse-normalizetomatrix.html#cb13-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/8.png" style="width:100.0%" />
+Change the facet background colors:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="parse-normalizetomatrix.html#cb14-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb14-2"><a href="parse-normalizetomatrix.html#cb14-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb14-3"><a href="parse-normalizetomatrix.html#cb14-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb14-4"><a href="parse-normalizetomatrix.html#cb14-4" tabindex="-1"></a>        <span class="at">facet_heatmap_params =</span> </span>
+<span id="cb14-5"><a href="parse-normalizetomatrix.html#cb14-5" tabindex="-1"></a>          <span class="fu">list</span>(<span class="at">strip =</span> <span class="fu">strip_themed</span>(<span class="at">background_x =</span> </span>
+<span id="cb14-6"><a href="parse-normalizetomatrix.html#cb14-6" tabindex="-1"></a>                                      <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>),</span>
+<span id="cb14-7"><a href="parse-normalizetomatrix.html#cb14-7" tabindex="-1"></a>                                                     <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>))</span>
+<span id="cb14-8"><a href="parse-normalizetomatrix.html#cb14-8" tabindex="-1"></a>          )))</span></code></pre></div>
+<p><img src="local_images/9.png" style="width:100.0%" />
+Remove the y axis facet border colors:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="parse-normalizetomatrix.html#cb15-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb15-2"><a href="parse-normalizetomatrix.html#cb15-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb15-3"><a href="parse-normalizetomatrix.html#cb15-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb15-4"><a href="parse-normalizetomatrix.html#cb15-4" tabindex="-1"></a>        <span class="at">facet_heatmap_params =</span> </span>
+<span id="cb15-5"><a href="parse-normalizetomatrix.html#cb15-5" tabindex="-1"></a>          <span class="fu">list</span>(<span class="at">strip =</span> <span class="fu">strip_themed</span>(<span class="at">background_x =</span> </span>
+<span id="cb15-6"><a href="parse-normalizetomatrix.html#cb15-6" tabindex="-1"></a>                                      <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>),</span>
+<span id="cb15-7"><a href="parse-normalizetomatrix.html#cb15-7" tabindex="-1"></a>                                                     <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>)),</span>
+<span id="cb15-8"><a href="parse-normalizetomatrix.html#cb15-8" tabindex="-1"></a>                                    <span class="at">background_y =</span> <span class="fu">elem_list_rect</span>(<span class="at">color =</span> <span class="st">&quot;grey95&quot;</span>)</span>
+<span id="cb15-9"><a href="parse-normalizetomatrix.html#cb15-9" tabindex="-1"></a>          )))</span></code></pre></div>
+<p><img src="local_images/10.png" style="width:100.0%" />
+Assign each sample with different color scales:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="parse-normalizetomatrix.html#cb16-1" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb16-2"><a href="parse-normalizetomatrix.html#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="parse-normalizetomatrix.html#cb16-3" tabindex="-1"></a>multi_heatmap_col <span class="ot">=</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="fu">brewer.pal</span>(<span class="dv">12</span>,<span class="st">&quot;Set3&quot;</span>)[<span class="dv">1</span>]),</span>
+<span id="cb16-4"><a href="parse-normalizetomatrix.html#cb16-4" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="fu">brewer.pal</span>(<span class="dv">12</span>,<span class="st">&quot;Set3&quot;</span>)[<span class="dv">2</span>]),</span>
+<span id="cb16-5"><a href="parse-normalizetomatrix.html#cb16-5" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="fu">brewer.pal</span>(<span class="dv">12</span>,<span class="st">&quot;Set3&quot;</span>)[<span class="dv">3</span>]),</span>
+<span id="cb16-6"><a href="parse-normalizetomatrix.html#cb16-6" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="fu">brewer.pal</span>(<span class="dv">12</span>,<span class="st">&quot;Set3&quot;</span>)[<span class="dv">4</span>]),</span>
+<span id="cb16-7"><a href="parse-normalizetomatrix.html#cb16-7" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="fu">brewer.pal</span>(<span class="dv">12</span>,<span class="st">&quot;Set3&quot;</span>)[<span class="dv">5</span>]),</span>
+<span id="cb16-8"><a href="parse-normalizetomatrix.html#cb16-8" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="fu">brewer.pal</span>(<span class="dv">12</span>,<span class="st">&quot;Set3&quot;</span>)[<span class="dv">6</span>]))</span>
+<span id="cb16-9"><a href="parse-normalizetomatrix.html#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="parse-normalizetomatrix.html#cb16-10" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb16-11"><a href="parse-normalizetomatrix.html#cb16-11" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb16-12"><a href="parse-normalizetomatrix.html#cb16-12" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb16-13"><a href="parse-normalizetomatrix.html#cb16-13" tabindex="-1"></a>        <span class="at">facet_heatmap_params =</span></span>
+<span id="cb16-14"><a href="parse-normalizetomatrix.html#cb16-14" tabindex="-1"></a>          <span class="fu">list</span>(<span class="at">strip =</span> <span class="fu">strip_themed</span>(<span class="at">background_x =</span></span>
+<span id="cb16-15"><a href="parse-normalizetomatrix.html#cb16-15" tabindex="-1"></a>                                      <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>),</span>
+<span id="cb16-16"><a href="parse-normalizetomatrix.html#cb16-16" tabindex="-1"></a>                                                     <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>)),</span>
+<span id="cb16-17"><a href="parse-normalizetomatrix.html#cb16-17" tabindex="-1"></a>                                    <span class="at">background_y =</span> <span class="fu">elem_list_rect</span>(<span class="at">color =</span> <span class="st">&quot;grey95&quot;</span>)</span>
+<span id="cb16-18"><a href="parse-normalizetomatrix.html#cb16-18" tabindex="-1"></a>          )),</span>
+<span id="cb16-19"><a href="parse-normalizetomatrix.html#cb16-19" tabindex="-1"></a>        <span class="at">multi.heatmap.col =</span> multi_heatmap_col)</span></code></pre></div>
+<p><img src="local_images/11.png" style="width:100.0%" /></p>
+<hr />
+</div>
+<div id="combined-plot" class="section level3 hasAnchor" number="2.6.3">
+<h3><span class="header-section-number">2.6.3</span> Combined plot<a href="parse-normalizetomatrix.html#combined-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can define the <strong>plot.type = “both”</strong> to combine the profile and heatmap plot:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="parse-normalizetomatrix.html#cb17-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb17-2"><a href="parse-normalizetomatrix.html#cb17-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/12.png" style="width:100.0%" /></p>
+<p>Also you can assign different color scales for every sample:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="parse-normalizetomatrix.html#cb18-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb18-2"><a href="parse-normalizetomatrix.html#cb18-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb18-3"><a href="parse-normalizetomatrix.html#cb18-3" tabindex="-1"></a>        <span class="at">multi.heatmap.col =</span> multi_heatmap_col)</span></code></pre></div>
+<p><img src="local_images/13.png" style="width:100.0%" /></p>
+<hr />
+</div>
+</div>
+<div id="cluster-for-genes" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Cluster for genes<a href="parse-normalizetomatrix.html#cluster-for-genes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sometimes you need cluster the genes into multiple groups like <strong>gain/upregulatted genes</strong>,
+<strong>retained/non-changed genes</strong> and <strong>loss/downregulatted genes</strong>. You can define the
+<strong>row_split</strong> parameters to define how the genes were grouped by.</p>
+<p>Here we split the genes into three groups and add group labels for samples.</p>
+<hr />
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="parse-normalizetomatrix.html#cb19-1" tabindex="-1"></a>row_split <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;group1&quot;</span>, <span class="st">&quot;group2&quot;</span>,<span class="st">&quot;group3&quot;</span>), <span class="fu">c</span>(<span class="dv">400</span>,<span class="dv">600</span>,<span class="dv">1000</span>))</span>
+<span id="cb19-2"><a href="parse-normalizetomatrix.html#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="parse-normalizetomatrix.html#cb19-3" tabindex="-1"></a><span class="co"># get matrix data</span></span>
+<span id="cb19-4"><a href="parse-normalizetomatrix.html#cb19-4" tabindex="-1"></a>mat_df.sp <span class="ot">&lt;-</span> <span class="fu">retriveData</span>(<span class="at">mat.list =</span> mat_list,</span>
+<span id="cb19-5"><a href="parse-normalizetomatrix.html#cb19-5" tabindex="-1"></a>                         <span class="at">sample.names =</span> sample.names,</span>
+<span id="cb19-6"><a href="parse-normalizetomatrix.html#cb19-6" tabindex="-1"></a>                         <span class="at">row.split =</span> row_split,</span>
+<span id="cb19-7"><a href="parse-normalizetomatrix.html#cb19-7" tabindex="-1"></a>                         <span class="at">group.sample =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;treat&quot;</span>,<span class="st">&quot;control&quot;</span>),<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>)))</span></code></pre></div>
+<p>Plot profile:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="parse-normalizetomatrix.html#cb20-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb20-2"><a href="parse-normalizetomatrix.html#cb20-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/14.png" style="width:100.0%" /></p>
+<p>Change samples orders:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="parse-normalizetomatrix.html#cb21-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb21-2"><a href="parse-normalizetomatrix.html#cb21-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb21-3"><a href="parse-normalizetomatrix.html#cb21-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names))</span></code></pre></div>
+<p><img src="local_images/15.png" style="width:100.0%" />
+Change line colors:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="parse-normalizetomatrix.html#cb22-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb22-2"><a href="parse-normalizetomatrix.html#cb22-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb22-3"><a href="parse-normalizetomatrix.html#cb22-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="parse-normalizetomatrix.html#cb22-4" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="parse-normalizetomatrix.html#cb22-5" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Paired&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/16.png" style="width:100.0%" /></p>
+<p>Add nested line for samples groups:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="parse-normalizetomatrix.html#cb23-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb23-2"><a href="parse-normalizetomatrix.html#cb23-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb23-3"><a href="parse-normalizetomatrix.html#cb23-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb23-4"><a href="parse-normalizetomatrix.html#cb23-4" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb23-5"><a href="parse-normalizetomatrix.html#cb23-5" tabindex="-1"></a>        <span class="at">theme_params =</span> <span class="fu">list</span>(<span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-6"><a href="parse-normalizetomatrix.html#cb23-6" tabindex="-1"></a>                            <span class="at">ggh4x.facet.nestline =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb23-7"><a href="parse-normalizetomatrix.html#cb23-7" tabindex="-1"></a>                                                                <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)))</span></code></pre></div>
+<p><img src="local_images/17.png" style="width:100.0%" />
+Change facet background colors:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="parse-normalizetomatrix.html#cb24-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb24-2"><a href="parse-normalizetomatrix.html#cb24-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb24-3"><a href="parse-normalizetomatrix.html#cb24-3" tabindex="-1"></a>        <span class="at">geom_line_params =</span> <span class="fu">list</span>(<span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb24-4"><a href="parse-normalizetomatrix.html#cb24-4" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb24-5"><a href="parse-normalizetomatrix.html#cb24-5" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> </span>
+<span id="cb24-6"><a href="parse-normalizetomatrix.html#cb24-6" tabindex="-1"></a>          <span class="fu">list</span>(<span class="at">strip =</span> <span class="fu">strip_themed</span>(<span class="at">background_x =</span> </span>
+<span id="cb24-7"><a href="parse-normalizetomatrix.html#cb24-7" tabindex="-1"></a>                                      <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;#85E6C5&quot;</span>,<span class="st">&quot;pink&quot;</span>),<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>)),</span>
+<span id="cb24-8"><a href="parse-normalizetomatrix.html#cb24-8" tabindex="-1"></a>                                                              RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>)),</span>
+<span id="cb24-9"><a href="parse-normalizetomatrix.html#cb24-9" tabindex="-1"></a>                                                     <span class="at">color =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;#85E6C5&quot;</span>,<span class="st">&quot;pink&quot;</span>),<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>)),</span>
+<span id="cb24-10"><a href="parse-normalizetomatrix.html#cb24-10" tabindex="-1"></a>                                                               RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&quot;Set3&quot;</span>)))</span>
+<span id="cb24-11"><a href="parse-normalizetomatrix.html#cb24-11" tabindex="-1"></a>          )),</span>
+<span id="cb24-12"><a href="parse-normalizetomatrix.html#cb24-12" tabindex="-1"></a>        <span class="at">theme_params =</span> <span class="fu">list</span>(<span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">&quot;mm&quot;</span>)))</span></code></pre></div>
+<p><img src="local_images/18.png" style="width:100.0%" /></p>
+<hr />
+<p>Heatmap visualization:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="parse-normalizetomatrix.html#cb25-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb25-2"><a href="parse-normalizetomatrix.html#cb25-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb25-3"><a href="parse-normalizetomatrix.html#cb25-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names))</span></code></pre></div>
+<p><img src="local_images/19.png" style="width:100.0%" /></p>
+<p>Add nested line:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="parse-normalizetomatrix.html#cb26-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb26-2"><a href="parse-normalizetomatrix.html#cb26-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb26-3"><a href="parse-normalizetomatrix.html#cb26-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb26-4"><a href="parse-normalizetomatrix.html#cb26-4" tabindex="-1"></a>        <span class="at">facet_heatmap_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb26-5"><a href="parse-normalizetomatrix.html#cb26-5" tabindex="-1"></a>        <span class="at">theme_params =</span> <span class="fu">list</span>(<span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-6"><a href="parse-normalizetomatrix.html#cb26-6" tabindex="-1"></a>                            <span class="at">ggh4x.facet.nestline =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb26-7"><a href="parse-normalizetomatrix.html#cb26-7" tabindex="-1"></a>                                                                <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)))</span></code></pre></div>
+<p><img src="local_images/20.png" style="width:100.0%" />
+Change the rowsplit groups orders:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="parse-normalizetomatrix.html#cb27-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb27-2"><a href="parse-normalizetomatrix.html#cb27-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb27-3"><a href="parse-normalizetomatrix.html#cb27-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb27-4"><a href="parse-normalizetomatrix.html#cb27-4" tabindex="-1"></a>        <span class="at">facet_heatmap_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb27-5"><a href="parse-normalizetomatrix.html#cb27-5" tabindex="-1"></a>        <span class="at">theme_params =</span> <span class="fu">list</span>(<span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb27-6"><a href="parse-normalizetomatrix.html#cb27-6" tabindex="-1"></a>                            <span class="at">ggh4x.facet.nestline =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb27-7"><a href="parse-normalizetomatrix.html#cb27-7" tabindex="-1"></a>                                                                <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)),</span>
+<span id="cb27-8"><a href="parse-normalizetomatrix.html#cb27-8" tabindex="-1"></a>        <span class="at">rowsplit.order =</span> <span class="fu">c</span>(<span class="st">&quot;group3</span><span class="sc">\n</span><span class="st">(n=1000)&quot;</span>,<span class="st">&quot;group1</span><span class="sc">\n</span><span class="st">(n=400)&quot;</span>,<span class="st">&quot;group2</span><span class="sc">\n</span><span class="st">(n=600)&quot;</span>))</span></code></pre></div>
+<p><img src="local_images/21.png" style="width:100.0%" /></p>
+<hr />
+<p>Combine the profile plot and heatmap:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="parse-normalizetomatrix.html#cb28-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb28-2"><a href="parse-normalizetomatrix.html#cb28-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb28-3"><a href="parse-normalizetomatrix.html#cb28-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb28-4"><a href="parse-normalizetomatrix.html#cb28-4" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb28-5"><a href="parse-normalizetomatrix.html#cb28-5" tabindex="-1"></a>        <span class="at">add_nested_line =</span> T)</span></code></pre></div>
+<p><img src="local_images/22.png" style="width:100.0%" />
+Control the color legend bar height:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="parse-normalizetomatrix.html#cb29-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb29-2"><a href="parse-normalizetomatrix.html#cb29-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb29-3"><a href="parse-normalizetomatrix.html#cb29-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb29-4"><a href="parse-normalizetomatrix.html#cb29-4" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb29-5"><a href="parse-normalizetomatrix.html#cb29-5" tabindex="-1"></a>        <span class="at">add_nested_line =</span> T,</span>
+<span id="cb29-6"><a href="parse-normalizetomatrix.html#cb29-6" tabindex="-1"></a>        <span class="at">multi.heatmap.col =</span> multi_heatmap_col,</span>
+<span id="cb29-7"><a href="parse-normalizetomatrix.html#cb29-7" tabindex="-1"></a>        <span class="at">multi_legend_barheight =</span> <span class="fl">0.75</span>)</span></code></pre></div>
+<p><img src="local_images/23.png" style="width:100.0%" />
+Put the legend below the plot:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="parse-normalizetomatrix.html#cb30-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp,</span>
+<span id="cb30-2"><a href="parse-normalizetomatrix.html#cb30-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb30-3"><a href="parse-normalizetomatrix.html#cb30-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb30-4"><a href="parse-normalizetomatrix.html#cb30-4" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb30-5"><a href="parse-normalizetomatrix.html#cb30-5" tabindex="-1"></a>        <span class="at">add_nested_line =</span> T,</span>
+<span id="cb30-6"><a href="parse-normalizetomatrix.html#cb30-6" tabindex="-1"></a>        <span class="at">theme_params =</span> <span class="fu">list</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb30-7"><a href="parse-normalizetomatrix.html#cb30-7" tabindex="-1"></a>        <span class="at">geom_line_params =</span> <span class="fu">list</span>(<span class="at">show.legend =</span> F),</span>
+<span id="cb30-8"><a href="parse-normalizetomatrix.html#cb30-8" tabindex="-1"></a>        <span class="at">multi.heatmap.col =</span> multi_heatmap_col,</span>
+<span id="cb30-9"><a href="parse-normalizetomatrix.html#cb30-9" tabindex="-1"></a>        <span class="at">multi_legend_barheight =</span> <span class="fl">0.75</span>)</span></code></pre></div>
+<p><img src="local_images/24.png" style="width:100.0%" /></p>
+</div>
+<div id="plot-around-tss-site" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Plot around TSS site<a href="parse-normalizetomatrix.html#plot-around-tss-site" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Upper codes showed how we plot around <strong>region body</strong> of interest genomic regions. Here
+we show example plots around <strong>TSS</strong> sites.</p>
+<hr />
+<p>Perepare data we need:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="parse-normalizetomatrix.html#cb31-1" tabindex="-1"></a>tss <span class="ot">&lt;-</span> <span class="fu">promoters</span>(gtf <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">2000</span>),<span class="at">upstream =</span> <span class="dv">0</span>, <span class="at">downstream =</span> <span class="dv">1</span>)</span>
+<span id="cb31-2"><a href="parse-normalizetomatrix.html#cb31-2" tabindex="-1"></a>tss</span>
+<span id="cb31-3"><a href="parse-normalizetomatrix.html#cb31-3" tabindex="-1"></a><span class="co"># GRanges object with 2000 ranges and 0 metadata columns:</span></span>
+<span id="cb31-4"><a href="parse-normalizetomatrix.html#cb31-4" tabindex="-1"></a><span class="co">#         seqnames    ranges strand</span></span>
+<span id="cb31-5"><a href="parse-normalizetomatrix.html#cb31-5" tabindex="-1"></a><span class="co">#             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span id="cb31-6"><a href="parse-normalizetomatrix.html#cb31-6" tabindex="-1"></a><span class="co">#   [1]          1     11869      +</span></span>
+<span id="cb31-7"><a href="parse-normalizetomatrix.html#cb31-7" tabindex="-1"></a><span class="co">#   [2]          1     29806      -</span></span>
+<span id="cb31-8"><a href="parse-normalizetomatrix.html#cb31-8" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="parse-normalizetomatrix.html#cb31-9" tabindex="-1"></a><span class="co"># comput matrix</span></span>
+<span id="cb31-10"><a href="parse-normalizetomatrix.html#cb31-10" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">seq_along</span>(bwfile), <span class="cf">function</span>(x){</span>
+<span id="cb31-11"><a href="parse-normalizetomatrix.html#cb31-11" tabindex="-1"></a>  <span class="co"># func test</span></span>
+<span id="cb31-12"><a href="parse-normalizetomatrix.html#cb31-12" tabindex="-1"></a>  bw <span class="ot">&lt;-</span> <span class="fu">import.bw</span>(bwfile[x])</span>
+<span id="cb31-13"><a href="parse-normalizetomatrix.html#cb31-13" tabindex="-1"></a>  </span>
+<span id="cb31-14"><a href="parse-normalizetomatrix.html#cb31-14" tabindex="-1"></a>  mat_trim <span class="ot">=</span> <span class="fu">normalizeToMatrix</span>(bw, tss, <span class="at">value_column =</span> <span class="st">&quot;score&quot;</span>, </span>
+<span id="cb31-15"><a href="parse-normalizetomatrix.html#cb31-15" tabindex="-1"></a>                               <span class="at">extend =</span> <span class="dv">3000</span>, <span class="at">mean_mode =</span> <span class="st">&quot;w0&quot;</span>, <span class="at">w =</span> <span class="dv">50</span>, </span>
+<span id="cb31-16"><a href="parse-normalizetomatrix.html#cb31-16" tabindex="-1"></a>                               <span class="at">keep =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.99</span>),</span>
+<span id="cb31-17"><a href="parse-normalizetomatrix.html#cb31-17" tabindex="-1"></a>                               <span class="at">background =</span> <span class="dv">0</span>, </span>
+<span id="cb31-18"><a href="parse-normalizetomatrix.html#cb31-18" tabindex="-1"></a>                               <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-19"><a href="parse-normalizetomatrix.html#cb31-19" tabindex="-1"></a>}) <span class="ot">-&gt;</span> mat_list</span>
+<span id="cb31-20"><a href="parse-normalizetomatrix.html#cb31-20" tabindex="-1"></a></span>
+<span id="cb31-21"><a href="parse-normalizetomatrix.html#cb31-21" tabindex="-1"></a>sample.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;H3K27ac&#39;</span>,<span class="st">&#39;H3K27me3&#39;</span>,<span class="st">&#39;H3K4m1&#39;</span>,<span class="st">&#39;H3K4m3&#39;</span>,<span class="st">&#39;H3K9ac&#39;</span>,<span class="st">&#39;INPUT&#39;</span>)</span>
+<span id="cb31-22"><a href="parse-normalizetomatrix.html#cb31-22" tabindex="-1"></a></span>
+<span id="cb31-23"><a href="parse-normalizetomatrix.html#cb31-23" tabindex="-1"></a><span class="co"># get matrix data</span></span>
+<span id="cb31-24"><a href="parse-normalizetomatrix.html#cb31-24" tabindex="-1"></a>mat_df.sp.tss <span class="ot">&lt;-</span> <span class="fu">retriveData</span>(<span class="at">mat.list =</span> mat_list,</span>
+<span id="cb31-25"><a href="parse-normalizetomatrix.html#cb31-25" tabindex="-1"></a>                             <span class="at">sample.names =</span> sample.names,</span>
+<span id="cb31-26"><a href="parse-normalizetomatrix.html#cb31-26" tabindex="-1"></a>                             <span class="at">row.split =</span> row_split,</span>
+<span id="cb31-27"><a href="parse-normalizetomatrix.html#cb31-27" tabindex="-1"></a>                             <span class="at">group.sample =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;treat&quot;</span>,<span class="st">&quot;control&quot;</span>),<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>)))</span></code></pre></div>
+<hr />
+<p>Profile plot:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="parse-normalizetomatrix.html#cb32-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp.tss,</span>
+<span id="cb32-2"><a href="parse-normalizetomatrix.html#cb32-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb32-3"><a href="parse-normalizetomatrix.html#cb32-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names))</span></code></pre></div>
+<p><img src="local_images/25.png" style="width:100.0%" />
+Heatmap plot:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="parse-normalizetomatrix.html#cb33-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp.tss,</span>
+<span id="cb33-2"><a href="parse-normalizetomatrix.html#cb33-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb33-3"><a href="parse-normalizetomatrix.html#cb33-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names))</span></code></pre></div>
+<p><img src="local_images/26.png" style="width:100.0%" />
+Combined plot:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="parse-normalizetomatrix.html#cb34-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp.tss,</span>
+<span id="cb34-2"><a href="parse-normalizetomatrix.html#cb34-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb34-3"><a href="parse-normalizetomatrix.html#cb34-3" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names))</span></code></pre></div>
+<p><img src="local_images/27.png" style="width:100.0%" />
+Change the axis labels:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="parse-normalizetomatrix.html#cb35-1" tabindex="-1"></a><span class="fu">attr</span>(mat_df.sp.tss,<span class="st">&quot;axis_name&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;-3kb&quot;</span>,<span class="st">&quot;TSS&quot;</span>,<span class="st">&quot;3kb&quot;</span>)</span>
+<span id="cb35-2"><a href="parse-normalizetomatrix.html#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="parse-normalizetomatrix.html#cb35-3" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df.sp.tss,</span>
+<span id="cb35-4"><a href="parse-normalizetomatrix.html#cb35-4" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb35-5"><a href="parse-normalizetomatrix.html#cb35-5" tabindex="-1"></a>        <span class="at">sample.order =</span> <span class="fu">rev</span>(sample.names),</span>
+<span id="cb35-6"><a href="parse-normalizetomatrix.html#cb35-6" tabindex="-1"></a>        <span class="at">facet_profile_params =</span> <span class="fu">list</span>(<span class="at">nest_line =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">1</span>)),</span>
+<span id="cb35-7"><a href="parse-normalizetomatrix.html#cb35-7" tabindex="-1"></a>        <span class="at">add_nested_line =</span> T)</span></code></pre></div>
+<p><img src="local_images/28.png" style="width:100.0%" /></p>
+</div>
+<div id="samples-with-different-target-regions" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Samples with different target regions<a href="parse-normalizetomatrix.html#samples-with-different-target-regions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In some situations, each sample may enriched different target genomic regions rather
+than same regions. This means the y axis is different from each other. Here we also
+show some examples for this situation.</p>
+<hr />
+<p>Get normalized signals for each sample with different regions:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="parse-normalizetomatrix.html#cb36-1" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">head</span>(gtf,<span class="dv">500</span>)</span>
+<span id="cb36-2"><a href="parse-normalizetomatrix.html#cb36-2" tabindex="-1"></a>genes2 <span class="ot">&lt;-</span> gtf[<span class="dv">501</span><span class="sc">:</span><span class="dv">1500</span>,]</span>
+<span id="cb36-3"><a href="parse-normalizetomatrix.html#cb36-3" tabindex="-1"></a>genes3 <span class="ot">&lt;-</span> gtf[<span class="dv">1501</span><span class="sc">:</span><span class="dv">3000</span>,]</span>
+<span id="cb36-4"><a href="parse-normalizetomatrix.html#cb36-4" tabindex="-1"></a>rg <span class="ot">&lt;-</span> <span class="fu">list</span>(genes,genes2,genes3)</span>
+<span id="cb36-5"><a href="parse-normalizetomatrix.html#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="parse-normalizetomatrix.html#cb36-6" tabindex="-1"></a><span class="co"># comput matrix</span></span>
+<span id="cb36-7"><a href="parse-normalizetomatrix.html#cb36-7" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">seq_along</span>(bwfile[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]), <span class="cf">function</span>(x){</span>
+<span id="cb36-8"><a href="parse-normalizetomatrix.html#cb36-8" tabindex="-1"></a>  <span class="co"># func test</span></span>
+<span id="cb36-9"><a href="parse-normalizetomatrix.html#cb36-9" tabindex="-1"></a>  bw <span class="ot">&lt;-</span> <span class="fu">import.bw</span>(bwfile[x])</span>
+<span id="cb36-10"><a href="parse-normalizetomatrix.html#cb36-10" tabindex="-1"></a>  </span>
+<span id="cb36-11"><a href="parse-normalizetomatrix.html#cb36-11" tabindex="-1"></a>  mat_trim <span class="ot">=</span> <span class="fu">normalizeToMatrix</span>(bw, rg[[x]], <span class="at">value_column =</span> <span class="st">&quot;score&quot;</span>, </span>
+<span id="cb36-12"><a href="parse-normalizetomatrix.html#cb36-12" tabindex="-1"></a>                               <span class="at">extend =</span> <span class="dv">3000</span>, <span class="at">mean_mode =</span> <span class="st">&quot;w0&quot;</span>, <span class="at">w =</span> <span class="dv">50</span>, </span>
+<span id="cb36-13"><a href="parse-normalizetomatrix.html#cb36-13" tabindex="-1"></a>                               <span class="at">keep =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.99</span>),</span>
+<span id="cb36-14"><a href="parse-normalizetomatrix.html#cb36-14" tabindex="-1"></a>                               <span class="at">background =</span> <span class="dv">0</span>, </span>
+<span id="cb36-15"><a href="parse-normalizetomatrix.html#cb36-15" tabindex="-1"></a>                               <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-16"><a href="parse-normalizetomatrix.html#cb36-16" tabindex="-1"></a>}) <span class="ot">-&gt;</span> mat_list.ng</span>
+<span id="cb36-17"><a href="parse-normalizetomatrix.html#cb36-17" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="parse-normalizetomatrix.html#cb36-18" tabindex="-1"></a>sample.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;H3K27ac&#39;</span>,<span class="st">&#39;H3K27me3&#39;</span>,<span class="st">&#39;H3K4m1&#39;</span>)</span>
+<span id="cb36-19"><a href="parse-normalizetomatrix.html#cb36-19" tabindex="-1"></a></span>
+<span id="cb36-20"><a href="parse-normalizetomatrix.html#cb36-20" tabindex="-1"></a><span class="co"># get matrix data</span></span>
+<span id="cb36-21"><a href="parse-normalizetomatrix.html#cb36-21" tabindex="-1"></a>mat_df <span class="ot">&lt;-</span> <span class="fu">retriveData</span>(<span class="at">mat.list =</span> mat_list.ng,</span>
+<span id="cb36-22"><a href="parse-normalizetomatrix.html#cb36-22" tabindex="-1"></a>                      <span class="at">sample.names =</span> sample.names)</span></code></pre></div>
+<p>We can see the matrices have different rows:</p>
+<p><img src="local_images/29.png" style="width:100.0%" /></p>
+<p>Profile plot:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parse-normalizetomatrix.html#cb37-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb37-2"><a href="parse-normalizetomatrix.html#cb37-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;profile&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/30.png" style="width:100.0%" /></p>
+<p>Heatmap plot, here you can see some blank facet panels in plot. This is because each
+sample have different target regions:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="parse-normalizetomatrix.html#cb38-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb38-2"><a href="parse-normalizetomatrix.html#cb38-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
+<p><img src="local_images/31.png" style="width:100.0%" /></p>
+<p>You can use the <strong>merge_facet</strong> the re-arrange the plot:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="parse-normalizetomatrix.html#cb39-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb39-2"><a href="parse-normalizetomatrix.html#cb39-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb39-3"><a href="parse-normalizetomatrix.html#cb39-3" tabindex="-1"></a>        <span class="at">merge_facet =</span> T)</span></code></pre></div>
+<p><img src="local_images/32.png" style="width:100.0%" /></p>
+<p>Assign multiple color scales for each sample:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="parse-normalizetomatrix.html#cb40-1" tabindex="-1"></a><span class="fu">ChipVis</span>(<span class="at">object =</span> mat_df,</span>
+<span id="cb40-2"><a href="parse-normalizetomatrix.html#cb40-2" tabindex="-1"></a>        <span class="at">plot.type =</span> <span class="st">&quot;heatmap&quot;</span>,</span>
+<span id="cb40-3"><a href="parse-normalizetomatrix.html#cb40-3" tabindex="-1"></a>        <span class="at">merge_facet =</span> T,</span>
+<span id="cb40-4"><a href="parse-normalizetomatrix.html#cb40-4" tabindex="-1"></a>        <span class="at">multi.heatmap.col =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="st">&quot;#068DA9&quot;</span>),</span>
+<span id="cb40-5"><a href="parse-normalizetomatrix.html#cb40-5" tabindex="-1"></a>                                 <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="st">&quot;#C23373&quot;</span>),</span>
+<span id="cb40-6"><a href="parse-normalizetomatrix.html#cb40-6" tabindex="-1"></a>                                 <span class="fu">c</span>(<span class="st">&quot;grey95&quot;</span>,<span class="st">&quot;#EE9322&quot;</span>)))</span></code></pre></div>
+<p><img src="local_images/33.png" style="width:100.0%" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parse-gettagmatrix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-NormalizeToMatrix.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
