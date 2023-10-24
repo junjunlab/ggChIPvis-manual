@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 multiHeatmap based on grid | ggChIPvis Reference Book</title>
+  <meta name="description" content="This is a detailed documentation of ggChIPvis package." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 multiHeatmap based on grid | ggChIPvis Reference Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a detailed documentation of ggChIPvis package." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 multiHeatmap based on grid | ggChIPvis Reference Book" />
+  
+  <meta name="twitter:description" content="This is a detailed documentation of ggChIPvis package." />
+  
+
+<meta name="author" content="Jun Zhang" />
+
+
+<meta name="date" content="2023-10-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chipheatmap-based-on-grid.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ggChIPvis manual documentation</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i><b>1.1</b> Citation</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#example"><i class="fa fa-check"></i><b>1.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html"><i class="fa fa-check"></i><b>2</b> Parse NormalizeToMatrix</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#test-data"><i class="fa fa-check"></i><b>2.1</b> Test data</a></li>
+<li class="chapter" data-level="2.2" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#prepare-interest-genomic-regions"><i class="fa fa-check"></i><b>2.2</b> Prepare interest genomic regions</a></li>
+<li class="chapter" data-level="2.3" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#compute-nomalized-matrix"><i class="fa fa-check"></i><b>2.3</b> Compute nomalized matrix</a></li>
+<li class="chapter" data-level="2.4" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#extract-data"><i class="fa fa-check"></i><b>2.4</b> Extract data</a></li>
+<li class="chapter" data-level="2.5" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#enrichedheatmap-visualization"><i class="fa fa-check"></i><b>2.5</b> EnrichedHeatmap visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#chipvis-visualization"><i class="fa fa-check"></i><b>2.6</b> ChipVis visualization</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#profile-plot"><i class="fa fa-check"></i><b>2.6.1</b> Profile plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#heatmap-plot"><i class="fa fa-check"></i><b>2.6.2</b> Heatmap plot</a></li>
+<li class="chapter" data-level="2.6.3" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#combined-plot"><i class="fa fa-check"></i><b>2.6.3</b> Combined plot</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#cluster-for-genes"><i class="fa fa-check"></i><b>2.7</b> Cluster for genes</a></li>
+<li class="chapter" data-level="2.8" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#plot-around-tss-site"><i class="fa fa-check"></i><b>2.8</b> Plot around TSS site</a></li>
+<li class="chapter" data-level="2.9" data-path="parse-normalizetomatrix.html"><a href="parse-normalizetomatrix.html#samples-with-different-target-regions"><i class="fa fa-check"></i><b>2.9</b> Samples with different target regions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html"><i class="fa fa-check"></i><b>3</b> Parse getTagMatrix</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#do-enrichment-analysis"><i class="fa fa-check"></i><b>3.1</b> Do enrichment analysis</a></li>
+<li class="chapter" data-level="3.2" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#profile-plot-1"><i class="fa fa-check"></i><b>3.2</b> Profile plot</a></li>
+<li class="chapter" data-level="3.3" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#heatmap-plot-1"><i class="fa fa-check"></i><b>3.3</b> Heatmap plot</a></li>
+<li class="chapter" data-level="3.4" data-path="parse-gettagmatrix.html"><a href="parse-gettagmatrix.html#combined-plot-1"><i class="fa fa-check"></i><b>3.4</b> Combined plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="parse-computematrix.html"><a href="parse-computematrix.html"><i class="fa fa-check"></i><b>4</b> Parse computeMatrix</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#test-data-1"><i class="fa fa-check"></i><b>4.1</b> Test data</a></li>
+<li class="chapter" data-level="4.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#prepare-target-genes"><i class="fa fa-check"></i><b>4.2</b> Prepare target genes</a></li>
+<li class="chapter" data-level="4.3" data-path="parse-computematrix.html"><a href="parse-computematrix.html#using-computematrix-and-plot-data"><i class="fa fa-check"></i><b>4.3</b> Using computeMatrix and plot data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#reference-point-mode"><i class="fa fa-check"></i><b>4.3.1</b> reference-point mode</a></li>
+<li class="chapter" data-level="4.3.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#scale-regions-mode"><i class="fa fa-check"></i><b>4.3.2</b> scale-regions mode</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="parse-computematrix.html"><a href="parse-computematrix.html#parse-deeptools-output-with-reference-point-mode"><i class="fa fa-check"></i><b>4.4</b> Parse deeptools output with reference-point mode</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#extract-data-1"><i class="fa fa-check"></i><b>4.4.1</b> Extract data</a></li>
+<li class="chapter" data-level="4.4.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#profile-plot-2"><i class="fa fa-check"></i><b>4.4.2</b> Profile plot</a></li>
+<li class="chapter" data-level="4.4.3" data-path="parse-computematrix.html"><a href="parse-computematrix.html#heatmap-plot-2"><i class="fa fa-check"></i><b>4.4.3</b> Heatmap plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="parse-computematrix.html"><a href="parse-computematrix.html#parse-deeptools-output-with-scale-regions-mode"><i class="fa fa-check"></i><b>4.5</b> Parse deeptools output with scale-regions mode</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="parse-computematrix.html"><a href="parse-computematrix.html#extract-data-2"><i class="fa fa-check"></i><b>4.5.1</b> Extract data</a></li>
+<li class="chapter" data-level="4.5.2" data-path="parse-computematrix.html"><a href="parse-computematrix.html#profile-plot-3"><i class="fa fa-check"></i><b>4.5.2</b> Profile plot</a></li>
+<li class="chapter" data-level="4.5.3" data-path="parse-computematrix.html"><a href="parse-computematrix.html#heatmap-plot-3"><i class="fa fa-check"></i><b>4.5.3</b> Heatmap plot</a></li>
+<li class="chapter" data-level="4.5.4" data-path="parse-computematrix.html"><a href="parse-computematrix.html#combined-plot-2"><i class="fa fa-check"></i><b>4.5.4</b> Combined plot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="adding-rowsplit-groups.html"><a href="adding-rowsplit-groups.html"><i class="fa fa-check"></i><b>5</b> Adding rowsplit groups</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="adding-rowsplit-groups.html"><a href="adding-rowsplit-groups.html#prepare-data"><i class="fa fa-check"></i><b>5.1</b> Prepare data</a></li>
+<li class="chapter" data-level="5.2" data-path="adding-rowsplit-groups.html"><a href="adding-rowsplit-groups.html#visualization-data"><i class="fa fa-check"></i><b>5.2</b> Visualization data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="statistics-of-enriched-signals.html"><a href="statistics-of-enriched-signals.html"><i class="fa fa-check"></i><b>6</b> Statistics of enriched signals</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="statistics-of-enriched-signals.html"><a href="statistics-of-enriched-signals.html#check-extracted-data"><i class="fa fa-check"></i><b>6.1</b> Check extracted data</a></li>
+<li class="chapter" data-level="6.2" data-path="statistics-of-enriched-signals.html"><a href="statistics-of-enriched-signals.html#drawing-boxplot"><i class="fa fa-check"></i><b>6.2</b> Drawing boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chipheatmap-based-on-grid.html"><a href="chipheatmap-based-on-grid.html"><i class="fa fa-check"></i><b>7</b> ChipHeatmap based on grid</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="chipheatmap-based-on-grid.html"><a href="chipheatmap-based-on-grid.html#load-data"><i class="fa fa-check"></i><b>7.1</b> Load data</a></li>
+<li class="chapter" data-level="7.2" data-path="chipheatmap-based-on-grid.html"><a href="chipheatmap-based-on-grid.html#single-heatmap-visualization"><i class="fa fa-check"></i><b>7.2</b> Single heatmap visualization</a></li>
+<li class="chapter" data-level="7.3" data-path="chipheatmap-based-on-grid.html"><a href="chipheatmap-based-on-grid.html#plot-gettagmatrix-output"><i class="fa fa-check"></i><b>7.3</b> Plot getTagMatrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="multiheatmap-based-on-grid.html"><a href="multiheatmap-based-on-grid.html"><i class="fa fa-check"></i><b>8</b> multiHeatmap based on grid</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="multiheatmap-based-on-grid.html"><a href="multiheatmap-based-on-grid.html#combine-multiple-plot"><i class="fa fa-check"></i><b>8.1</b> Combine multiple plot</a></li>
+<li class="chapter" data-level="8.2" data-path="multiheatmap-based-on-grid.html"><a href="multiheatmap-based-on-grid.html#row-split"><i class="fa fa-check"></i><b>8.2</b> Row split</a></li>
+<li class="chapter" data-level="8.3" data-path="multiheatmap-based-on-grid.html"><a href="multiheatmap-based-on-grid.html#add-group-for-samples"><i class="fa fa-check"></i><b>8.3</b> Add group for samples</a></li>
+<li class="chapter" data-level="8.4" data-path="multiheatmap-based-on-grid.html"><a href="multiheatmap-based-on-grid.html#draw-gettagmatrix-output"><i class="fa fa-check"></i><b>8.4</b> Draw getTagMatrix output</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ggChIPvis Reference Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiheatmap-based-on-grid" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> multiHeatmap based on grid<a href="multiheatmap-based-on-grid.html#multiheatmap-based-on-grid" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>multiHeatmap</strong> is mainly based on <strong>ChipHeatmap</strong> to produce plot and parameters
+can be passed with it.</p>
+<hr />
+<div id="combine-multiple-plot" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Combine multiple plot<a href="multiheatmap-based-on-grid.html#combine-multiple-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>multiHeatmap</strong> need accept <strong>normalizeToMatrix/getTagMatrix/parseDeeptools</strong> output:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="multiheatmap-based-on-grid.html#cb89-1" tabindex="-1"></a>col2 <span class="ot">&lt;-</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">4</span>,<span class="st">&quot;Set1&quot;</span>)</span>
+<span id="cb89-2"><a href="multiheatmap-based-on-grid.html#cb89-2" tabindex="-1"></a>col <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>,col2[<span class="dv">1</span>]),<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>,col2[<span class="dv">2</span>]),</span>
+<span id="cb89-3"><a href="multiheatmap-based-on-grid.html#cb89-3" tabindex="-1"></a>            <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>,col2[<span class="dv">3</span>]),<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>,col2[<span class="dv">4</span>]))</span>
+<span id="cb89-4"><a href="multiheatmap-based-on-grid.html#cb89-4" tabindex="-1"></a></span>
+<span id="cb89-5"><a href="multiheatmap-based-on-grid.html#cb89-5" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb89-6"><a href="multiheatmap-based-on-grid.html#cb89-6" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>))</span></code></pre></div>
+<p><img src="local_images/75.png" style="width:100.0%" />
+Control sample label style:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="multiheatmap-based-on-grid.html#cb90-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb90-2"><a href="multiheatmap-based-on-grid.html#cb90-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb90-3"><a href="multiheatmap-based-on-grid.html#cb90-3" tabindex="-1"></a>             <span class="at">ChipHeatmap.params =</span> <span class="fu">list</span>(<span class="at">label.rect.gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="cn">NA</span>,<span class="at">col =</span> <span class="cn">NA</span>)))</span></code></pre></div>
+<p><img src="local_images/76.png" style="width:100.0%" />
+Change the heatmap color:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="multiheatmap-based-on-grid.html#cb91-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb91-2"><a href="multiheatmap-based-on-grid.html#cb91-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb91-3"><a href="multiheatmap-based-on-grid.html#cb91-3" tabindex="-1"></a>             <span class="at">heatmap.col =</span> col)</span></code></pre></div>
+<p><img src="local_images/77.png" style="width:100.0%" />
+Keep one left annobar if your row orders and numbers are same:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="multiheatmap-based-on-grid.html#cb92-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb92-2"><a href="multiheatmap-based-on-grid.html#cb92-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb92-3"><a href="multiheatmap-based-on-grid.html#cb92-3" tabindex="-1"></a>             <span class="at">heatmap.col =</span> col,</span>
+<span id="cb92-4"><a href="multiheatmap-based-on-grid.html#cb92-4" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T)</span></code></pre></div>
+<p><img src="local_images/78.png" style="width:100.0%" />
+Supply with <strong>ChipHeatmap</strong> parameters:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="multiheatmap-based-on-grid.html#cb93-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb93-2"><a href="multiheatmap-based-on-grid.html#cb93-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb93-3"><a href="multiheatmap-based-on-grid.html#cb93-3" tabindex="-1"></a>             <span class="at">heatmap.col =</span> col,</span>
+<span id="cb93-4"><a href="multiheatmap-based-on-grid.html#cb93-4" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T,</span>
+<span id="cb93-5"><a href="multiheatmap-based-on-grid.html#cb93-5" tabindex="-1"></a>             <span class="at">ChipHeatmap.params =</span> <span class="fu">list</span>(<span class="at">HeatmapLayout.params =</span> <span class="fu">list</span>(<span class="at">heatmap.size =</span> <span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.5</span>)),</span>
+<span id="cb93-6"><a href="multiheatmap-based-on-grid.html#cb93-6" tabindex="-1"></a>                                       <span class="at">ht.xaxis.rot =</span> <span class="dv">45</span>))</span></code></pre></div>
+<p><img src="local_images/79.png" style="width:100.0%" /></p>
+<p><strong>scale.range</strong> can make the multiple legend signal range to be same, so you can
+keep just one legend:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="multiheatmap-based-on-grid.html#cb94-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb94-2"><a href="multiheatmap-based-on-grid.html#cb94-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb94-3"><a href="multiheatmap-based-on-grid.html#cb94-3" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T,</span>
+<span id="cb94-4"><a href="multiheatmap-based-on-grid.html#cb94-4" tabindex="-1"></a>             <span class="at">ChipHeatmap.params =</span> <span class="fu">list</span>(<span class="at">HeatmapLayout.params =</span> <span class="fu">list</span>(<span class="at">heatmap.size =</span> <span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.5</span>))),</span>
+<span id="cb94-5"><a href="multiheatmap-based-on-grid.html#cb94-5" tabindex="-1"></a>             <span class="at">scale.range =</span> T,</span>
+<span id="cb94-6"><a href="multiheatmap-based-on-grid.html#cb94-6" tabindex="-1"></a>             <span class="at">keep.one.legend =</span> T)</span></code></pre></div>
+<p><img src="local_images/80.png" style="width:100.0%" /></p>
+</div>
+<div id="row-split" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Row split<a href="multiheatmap-based-on-grid.html#row-split" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Split the rows:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="multiheatmap-based-on-grid.html#cb95-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb95-2"><a href="multiheatmap-based-on-grid.html#cb95-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb95-3"><a href="multiheatmap-based-on-grid.html#cb95-3" tabindex="-1"></a>             <span class="at">heatmap.col =</span> col,</span>
+<span id="cb95-4"><a href="multiheatmap-based-on-grid.html#cb95-4" tabindex="-1"></a>             <span class="at">row.split =</span> row_split)</span></code></pre></div>
+<p><img src="local_images/81.png" style="width:100.0%" />
+Keep only one legend:</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="multiheatmap-based-on-grid.html#cb96-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb96-2"><a href="multiheatmap-based-on-grid.html#cb96-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb96-3"><a href="multiheatmap-based-on-grid.html#cb96-3" tabindex="-1"></a>             <span class="at">row.split =</span> row_split,</span>
+<span id="cb96-4"><a href="multiheatmap-based-on-grid.html#cb96-4" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T,</span>
+<span id="cb96-5"><a href="multiheatmap-based-on-grid.html#cb96-5" tabindex="-1"></a>             <span class="at">scale.range =</span> T,</span>
+<span id="cb96-6"><a href="multiheatmap-based-on-grid.html#cb96-6" tabindex="-1"></a>             <span class="at">keep.one.legend =</span> T)</span></code></pre></div>
+<p><img src="local_images/82.png" style="width:100.0%" />
+## Draw profile</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="multiheatmap-based-on-grid.html#cb97-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb97-2"><a href="multiheatmap-based-on-grid.html#cb97-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb97-3"><a href="multiheatmap-based-on-grid.html#cb97-3" tabindex="-1"></a>             <span class="at">draw.profile =</span> T)</span></code></pre></div>
+<p><img src="local_images/83.png" style="width:100.0%" /></p>
+<p><strong>scale.y.range</strong> can make the multiple profile y scales to be same:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="multiheatmap-based-on-grid.html#cb98-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb98-2"><a href="multiheatmap-based-on-grid.html#cb98-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb98-3"><a href="multiheatmap-based-on-grid.html#cb98-3" tabindex="-1"></a>             <span class="at">draw.profile =</span> T,</span>
+<span id="cb98-4"><a href="multiheatmap-based-on-grid.html#cb98-4" tabindex="-1"></a>             <span class="at">scale.y.range =</span> T)</span></code></pre></div>
+<p><img src="local_images/84.png" style="width:100.0%" />
+We can remove some redundant elements:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="multiheatmap-based-on-grid.html#cb99-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb99-2"><a href="multiheatmap-based-on-grid.html#cb99-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb99-3"><a href="multiheatmap-based-on-grid.html#cb99-3" tabindex="-1"></a>             <span class="at">draw.profile =</span> T,</span>
+<span id="cb99-4"><a href="multiheatmap-based-on-grid.html#cb99-4" tabindex="-1"></a>             <span class="at">scale.y.range =</span> T,</span>
+<span id="cb99-5"><a href="multiheatmap-based-on-grid.html#cb99-5" tabindex="-1"></a>             <span class="at">scale.range =</span> T,</span>
+<span id="cb99-6"><a href="multiheatmap-based-on-grid.html#cb99-6" tabindex="-1"></a>             <span class="at">ChipHeatmap.params =</span> <span class="fu">list</span>(<span class="at">HeatmapLayout.params =</span> <span class="fu">list</span>(<span class="at">heatmap.size =</span> <span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.5</span>))),</span>
+<span id="cb99-7"><a href="multiheatmap-based-on-grid.html#cb99-7" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T,</span>
+<span id="cb99-8"><a href="multiheatmap-based-on-grid.html#cb99-8" tabindex="-1"></a>             <span class="at">keep.one.legend =</span> T,</span>
+<span id="cb99-9"><a href="multiheatmap-based-on-grid.html#cb99-9" tabindex="-1"></a>             <span class="at">keep.one.line.legend =</span> T,</span>
+<span id="cb99-10"><a href="multiheatmap-based-on-grid.html#cb99-10" tabindex="-1"></a>             <span class="at">keep.one.profile.yaxis =</span> T)</span></code></pre></div>
+<p><img src="local_images/85.png" style="width:100.0%" />
+Add row split:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="multiheatmap-based-on-grid.html#cb100-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb100-2"><a href="multiheatmap-based-on-grid.html#cb100-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb100-3"><a href="multiheatmap-based-on-grid.html#cb100-3" tabindex="-1"></a>             <span class="at">draw.profile =</span> T,</span>
+<span id="cb100-4"><a href="multiheatmap-based-on-grid.html#cb100-4" tabindex="-1"></a>             <span class="at">scale.y.range =</span> T,</span>
+<span id="cb100-5"><a href="multiheatmap-based-on-grid.html#cb100-5" tabindex="-1"></a>             <span class="at">ChipHeatmap.params =</span> <span class="fu">list</span>(<span class="at">HeatmapLayout.params =</span> <span class="fu">list</span>(<span class="at">heatmap.size =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.5</span>))),</span>
+<span id="cb100-6"><a href="multiheatmap-based-on-grid.html#cb100-6" tabindex="-1"></a>             <span class="at">plot.size =</span> <span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">0.8</span>),</span>
+<span id="cb100-7"><a href="multiheatmap-based-on-grid.html#cb100-7" tabindex="-1"></a>             <span class="at">scale.range =</span> T,</span>
+<span id="cb100-8"><a href="multiheatmap-based-on-grid.html#cb100-8" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T,</span>
+<span id="cb100-9"><a href="multiheatmap-based-on-grid.html#cb100-9" tabindex="-1"></a>             <span class="at">keep.one.legend =</span> T,</span>
+<span id="cb100-10"><a href="multiheatmap-based-on-grid.html#cb100-10" tabindex="-1"></a>             <span class="at">keep.one.line.legend =</span> T,</span>
+<span id="cb100-11"><a href="multiheatmap-based-on-grid.html#cb100-11" tabindex="-1"></a>             <span class="at">keep.one.profile.yaxis =</span> T,</span>
+<span id="cb100-12"><a href="multiheatmap-based-on-grid.html#cb100-12" tabindex="-1"></a>             <span class="at">row.split =</span> row_split)</span></code></pre></div>
+<p><img src="local_images/86.png" style="width:100.0%" /></p>
+</div>
+<div id="add-group-for-samples" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Add group for samples<a href="multiheatmap-based-on-grid.html#add-group-for-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can supply a list to define the how the samples be groupyed by. You must keep the
+sample orders to be same with you group orders:</p>
+<hr />
+<p>Add one group:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="multiheatmap-based-on-grid.html#cb101-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb101-2"><a href="multiheatmap-based-on-grid.html#cb101-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb101-3"><a href="multiheatmap-based-on-grid.html#cb101-3" tabindex="-1"></a>             <span class="at">sample.group1 =</span> <span class="fu">list</span>(<span class="at">group1 =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>),</span>
+<span id="cb101-4"><a href="multiheatmap-based-on-grid.html#cb101-4" tabindex="-1"></a>                                  <span class="at">group2 =</span> <span class="fu">c</span>(<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>)))</span></code></pre></div>
+<p><img src="local_images/87.png" style="width:100.0%" /></p>
+<p>Add two groups:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="multiheatmap-based-on-grid.html#cb102-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb102-2"><a href="multiheatmap-based-on-grid.html#cb102-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb102-3"><a href="multiheatmap-based-on-grid.html#cb102-3" tabindex="-1"></a>             <span class="at">sample.group1 =</span> <span class="fu">list</span>(<span class="at">group1 =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>),</span>
+<span id="cb102-4"><a href="multiheatmap-based-on-grid.html#cb102-4" tabindex="-1"></a>                                  <span class="at">group2 =</span> <span class="fu">c</span>(<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb102-5"><a href="multiheatmap-based-on-grid.html#cb102-5" tabindex="-1"></a>             <span class="at">sample.group2 =</span> <span class="fu">list</span>(<span class="at">control =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8h&quot;</span>),</span>
+<span id="cb102-6"><a href="multiheatmap-based-on-grid.html#cb102-6" tabindex="-1"></a>                                  <span class="at">treat =</span> <span class="fu">c</span>(<span class="st">&quot;24 h&quot;</span>)))</span></code></pre></div>
+<p><img src="local_images/88.png" style="width:100.0%" /></p>
+<p>Control the top annobar style:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="multiheatmap-based-on-grid.html#cb103-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb103-2"><a href="multiheatmap-based-on-grid.html#cb103-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb103-3"><a href="multiheatmap-based-on-grid.html#cb103-3" tabindex="-1"></a>             <span class="at">sample.group1 =</span> <span class="fu">list</span>(<span class="at">group1 =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>),</span>
+<span id="cb103-4"><a href="multiheatmap-based-on-grid.html#cb103-4" tabindex="-1"></a>                                  <span class="at">group2 =</span> <span class="fu">c</span>(<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb103-5"><a href="multiheatmap-based-on-grid.html#cb103-5" tabindex="-1"></a>             <span class="at">sample.group2 =</span> <span class="fu">list</span>(<span class="at">control =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8h&quot;</span>),</span>
+<span id="cb103-6"><a href="multiheatmap-based-on-grid.html#cb103-6" tabindex="-1"></a>                                  <span class="at">treat =</span> <span class="fu">c</span>(<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb103-7"><a href="multiheatmap-based-on-grid.html#cb103-7" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g1 =</span> <span class="fu">list</span>(<span class="at">group.anno.rect.fill =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;pink&quot;</span>),</span>
+<span id="cb103-8"><a href="multiheatmap-based-on-grid.html#cb103-8" tabindex="-1"></a>                                            <span class="at">group.anno.rect.col =</span> <span class="cn">NA</span>),</span>
+<span id="cb103-9"><a href="multiheatmap-based-on-grid.html#cb103-9" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g2 =</span> <span class="fu">list</span>(<span class="at">group.anno.rect.fill =</span> <span class="fu">c</span>(<span class="st">&quot;purple&quot;</span>,<span class="st">&quot;grey&quot;</span>),</span>
+<span id="cb103-10"><a href="multiheatmap-based-on-grid.html#cb103-10" tabindex="-1"></a>                                            <span class="at">group.anno.rect.col =</span> <span class="cn">NA</span>))</span></code></pre></div>
+<p><img src="local_images/89.png" style="width:100.0%" />
+Control the top annobar height:</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="multiheatmap-based-on-grid.html#cb104-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb104-2"><a href="multiheatmap-based-on-grid.html#cb104-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb104-3"><a href="multiheatmap-based-on-grid.html#cb104-3" tabindex="-1"></a>             <span class="at">sample.group1 =</span> <span class="fu">list</span>(<span class="at">group1 =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>),</span>
+<span id="cb104-4"><a href="multiheatmap-based-on-grid.html#cb104-4" tabindex="-1"></a>                                  <span class="at">group2 =</span> <span class="fu">c</span>(<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb104-5"><a href="multiheatmap-based-on-grid.html#cb104-5" tabindex="-1"></a>             <span class="at">sample.group2 =</span> <span class="fu">list</span>(<span class="at">control =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8h&quot;</span>),</span>
+<span id="cb104-6"><a href="multiheatmap-based-on-grid.html#cb104-6" tabindex="-1"></a>                                  <span class="at">treat =</span> <span class="fu">c</span>(<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb104-7"><a href="multiheatmap-based-on-grid.html#cb104-7" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g1 =</span> <span class="fu">list</span>(<span class="at">group.anno.rect.fill =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;pink&quot;</span>)),</span>
+<span id="cb104-8"><a href="multiheatmap-based-on-grid.html#cb104-8" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g2 =</span> <span class="fu">list</span>(<span class="at">group.anno.rect.fill =</span> <span class="fu">c</span>(<span class="st">&quot;purple&quot;</span>,<span class="st">&quot;grey&quot;</span>)),</span>
+<span id="cb104-9"><a href="multiheatmap-based-on-grid.html#cb104-9" tabindex="-1"></a>             <span class="at">panel.rect.gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="st">&quot;grey90&quot;</span>),</span>
+<span id="cb104-10"><a href="multiheatmap-based-on-grid.html#cb104-10" tabindex="-1"></a>             <span class="at">anno.panel.height =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<p><img src="local_images/90.png" style="width:100.0%" />
+Add line anno:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="multiheatmap-based-on-grid.html#cb105-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb105-2"><a href="multiheatmap-based-on-grid.html#cb105-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb105-3"><a href="multiheatmap-based-on-grid.html#cb105-3" tabindex="-1"></a>             <span class="at">sample.group1 =</span> <span class="fu">list</span>(<span class="at">group1 =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>),</span>
+<span id="cb105-4"><a href="multiheatmap-based-on-grid.html#cb105-4" tabindex="-1"></a>                                  <span class="at">group2 =</span> <span class="fu">c</span>(<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb105-5"><a href="multiheatmap-based-on-grid.html#cb105-5" tabindex="-1"></a>             <span class="at">sample.group2 =</span> <span class="fu">list</span>(<span class="at">control =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8h&quot;</span>),</span>
+<span id="cb105-6"><a href="multiheatmap-based-on-grid.html#cb105-6" tabindex="-1"></a>                                  <span class="at">treat =</span> <span class="fu">c</span>(<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb105-7"><a href="multiheatmap-based-on-grid.html#cb105-7" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g1 =</span> <span class="fu">list</span>(<span class="at">sample.anno.type =</span> <span class="st">&quot;line&quot;</span>),</span>
+<span id="cb105-8"><a href="multiheatmap-based-on-grid.html#cb105-8" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g2 =</span> <span class="fu">list</span>(<span class="at">sample.anno.type =</span> <span class="st">&quot;line&quot;</span>))</span></code></pre></div>
+<p><img src="local_images/91.png" style="width:100.0%" />
+Draw a complete plot:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="multiheatmap-based-on-grid.html#cb106-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> deep_mat,</span>
+<span id="cb106-2"><a href="multiheatmap-based-on-grid.html#cb106-2" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>),</span>
+<span id="cb106-3"><a href="multiheatmap-based-on-grid.html#cb106-3" tabindex="-1"></a>             <span class="at">sample.group1 =</span> <span class="fu">list</span>(<span class="at">group1 =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>),</span>
+<span id="cb106-4"><a href="multiheatmap-based-on-grid.html#cb106-4" tabindex="-1"></a>                                  <span class="at">group2 =</span> <span class="fu">c</span>(<span class="st">&quot;8 h&quot;</span>,<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb106-5"><a href="multiheatmap-based-on-grid.html#cb106-5" tabindex="-1"></a>             <span class="at">sample.group2 =</span> <span class="fu">list</span>(<span class="at">control =</span> <span class="fu">c</span>(<span class="st">&quot;0 h&quot;</span>,<span class="st">&quot;2 h&quot;</span>,<span class="st">&quot;8h&quot;</span>),</span>
+<span id="cb106-6"><a href="multiheatmap-based-on-grid.html#cb106-6" tabindex="-1"></a>                                  <span class="at">treat =</span> <span class="fu">c</span>(<span class="st">&quot;24 h&quot;</span>)),</span>
+<span id="cb106-7"><a href="multiheatmap-based-on-grid.html#cb106-7" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g1 =</span> <span class="fu">list</span>(<span class="at">sample.anno.type =</span> <span class="st">&quot;line&quot;</span>),</span>
+<span id="cb106-8"><a href="multiheatmap-based-on-grid.html#cb106-8" tabindex="-1"></a>             <span class="at">draw.anno.fun.params.g2 =</span> <span class="fu">list</span>(<span class="at">sample.anno.type =</span> <span class="st">&quot;line&quot;</span>),</span>
+<span id="cb106-9"><a href="multiheatmap-based-on-grid.html#cb106-9" tabindex="-1"></a>             <span class="at">scale.range =</span> T,</span>
+<span id="cb106-10"><a href="multiheatmap-based-on-grid.html#cb106-10" tabindex="-1"></a>             <span class="at">scale.y.range =</span> T,</span>
+<span id="cb106-11"><a href="multiheatmap-based-on-grid.html#cb106-11" tabindex="-1"></a>             <span class="at">draw.profile =</span> T,</span>
+<span id="cb106-12"><a href="multiheatmap-based-on-grid.html#cb106-12" tabindex="-1"></a>             <span class="at">keep.row.order =</span> T,</span>
+<span id="cb106-13"><a href="multiheatmap-based-on-grid.html#cb106-13" tabindex="-1"></a>             <span class="at">keep.one.left.annobar =</span> T,</span>
+<span id="cb106-14"><a href="multiheatmap-based-on-grid.html#cb106-14" tabindex="-1"></a>             <span class="at">keep.one.profile.yaxis =</span> T,</span>
+<span id="cb106-15"><a href="multiheatmap-based-on-grid.html#cb106-15" tabindex="-1"></a>             <span class="at">keep.one.line.legend =</span> T,</span>
+<span id="cb106-16"><a href="multiheatmap-based-on-grid.html#cb106-16" tabindex="-1"></a>             <span class="at">keep.one.legend =</span> T,</span>
+<span id="cb106-17"><a href="multiheatmap-based-on-grid.html#cb106-17" tabindex="-1"></a>             <span class="at">plot.size =</span> <span class="fu">c</span>(<span class="fl">0.75</span>,<span class="fl">0.9</span>),</span>
+<span id="cb106-18"><a href="multiheatmap-based-on-grid.html#cb106-18" tabindex="-1"></a>             <span class="at">ChipHeatmap.params =</span> <span class="fu">list</span>(<span class="at">HeatmapLayout.params =</span> <span class="fu">list</span>(<span class="at">heatmap.size =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.5</span>))))</span></code></pre></div>
+<p><img src="local_images/92.png" style="width:100.0%" /></p>
+</div>
+<div id="draw-gettagmatrix-output" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Draw getTagMatrix output<a href="multiheatmap-based-on-grid.html#draw-gettagmatrix-output" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="multiheatmap-based-on-grid.html#cb107-1" tabindex="-1"></a><span class="fu">multiHeatmap</span>(<span class="at">mat.list =</span> seek_list,</span>
+<span id="cb107-2"><a href="multiheatmap-based-on-grid.html#cb107-2" tabindex="-1"></a>             <span class="at">quantile.threshold =</span> <span class="dv">1</span>,</span>
+<span id="cb107-3"><a href="multiheatmap-based-on-grid.html#cb107-3" tabindex="-1"></a>             <span class="at">heatmap_rank_method =</span> <span class="st">&quot;sum&quot;</span>,</span>
+<span id="cb107-4"><a href="multiheatmap-based-on-grid.html#cb107-4" tabindex="-1"></a>             <span class="at">keep.row.order =</span> F,</span>
+<span id="cb107-5"><a href="multiheatmap-based-on-grid.html#cb107-5" tabindex="-1"></a>             <span class="at">sample.label =</span> <span class="fu">c</span>(<span class="st">&quot;CBX6&quot;</span>,<span class="st">&quot;CBX7&quot;</span>))</span></code></pre></div>
+<p><img src="local_images/93.png" style="width:100.0%" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chipheatmap-based-on-grid.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/07-multiHeatmap.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

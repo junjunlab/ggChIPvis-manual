@@ -41,3 +41,12 @@ visualization-data
 statistics-of-enriched-signals
 check-extracted-data
 drawing-boxplot
+chipheatmap-based-on-grid
+load-data
+single-heatmap-visualization
+plot-gettagmatrix-output
+multiheatmap-based-on-grid
+combine-multiple-plot
+row-split
+add-group-for-samples
+draw-gettagmatrix-output
